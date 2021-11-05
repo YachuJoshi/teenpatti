@@ -1,35 +1,35 @@
-import { SUITS, RANKS } from "./base";
+import { Card } from "./card";
 import { shuffle } from "./utils";
+import { SUITS, RANKS } from "./base";
 
 export class Deck {
-  deck: string[];
+  deck: Card[];
 
   constructor() {
     this.initDeck();
-    this.shuffleDeck();
   }
 
   initDeck(): void {
     this.deck = [];
     SUITS.forEach((suit) => {
       RANKS.forEach((rank) => {
-        this.deck.push(`${rank} of ${suit}`);
+        this.deck.push(new Card(rank, suit));
       });
     });
   }
 
-  shuffleDeck(): void {
+  shuffle(): void {
     this.deck = shuffle(this.deck);
   }
 
-  dealOne(): string | Error {
+  dealOne(): Card | Error {
     if (this.deck.length) {
       return this.deck.pop()!;
     }
     throw new Error("Out Of Cards");
   }
 
-  get fullDeck(): string[] {
+  get fullDeck(): Card[] {
     return this.deck;
   }
 }

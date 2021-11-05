@@ -13,3 +13,23 @@ export const shuffle = <T>(array: T[]): T[] => {
 
   return array;
 };
+
+export const isConsecutive = (array: number[]): boolean => {
+  var i = 2,
+    d;
+  while (i < array.length) {
+    d = array[i - 1] - array[i - 2];
+    if (Math.abs(d) === 1 && d === array[i] - array[i - 1]) {
+      return false;
+    }
+    i++;
+  }
+  return true;
+};
+
+export const areArraysEqual = <T>(arrayOne: T[], arrayTwo: T[]): boolean => {
+  return (
+    arrayOne.length === arrayTwo.length &&
+    arrayOne.every((value, index) => value === arrayTwo[index])
+  );
+};

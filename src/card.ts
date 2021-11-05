@@ -9,8 +9,8 @@ export class Card {
   value: number;
   cardImage: HTMLImageElement;
 
-  constructor(rank: string, suit: string, src: string) {
-    this.initCardImage(src);
+  constructor(rank: string, suit: string, src?: string) {
+    // this.initCardImage(src);
     this.suit = suit;
     this.rank = rank;
     this.value = VALUES[this.rank];
