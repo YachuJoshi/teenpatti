@@ -15,16 +15,7 @@ export const shuffle = <T>(array: T[]): T[] => {
 };
 
 export const isConsecutive = (array: number[]): boolean => {
-  var i = 2,
-    d;
-  while (i < array.length) {
-    d = array[i - 1] - array[i - 2];
-    if (Math.abs(d) === 1 && d === array[i] - array[i - 1]) {
-      return false;
-    }
-    i++;
-  }
-  return true;
+  return array.every((num, i) => (array[i + 1] || num + 1) - num === 1);
 };
 
 export const areArraysEqual = <T>(arrayOne: T[], arrayTwo: T[]): boolean => {
