@@ -1,5 +1,6 @@
 import { Card } from "./card";
 import { shuffle } from "./utils";
+import { cardImage } from "./images";
 import { SUITS, RANKS } from "./base";
 
 export class Deck {
@@ -9,11 +10,20 @@ export class Deck {
     this.initDeck();
   }
 
+  getCardImage = (index: number, suit: string): string => {
+    if (suit === "Clubs") return cardImage[index][0];
+    if (suit === "Diamonds") return cardImage[index][1];
+    if (suit === "Hearts") return cardImage[index][2];
+    if (suit === "Spades") return cardImage[index][3];
+    return 'None';
+  };
+
   initDeck(): void {
     this.deck = [];
     SUITS.forEach((suit) => {
       RANKS.forEach((rank) => {
-        this.deck.push(new Card(rank, suit));
+        const cardImg = this.getCardImage(RANKS.indexOf(rank), suit);
+        this.deck.push(new Card(rank, suit, cardImg));
       });
     });
   }

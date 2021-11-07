@@ -1,23 +1,20 @@
-import { VALUES } from "./base";
+import { VALUES, CARD_HEIGHT, CARD_WIDTH } from "./base";
+
+interface Position {
+  x: number;
+  y: number;
+}
 export class Card {
-  position: {
-    x: number;
-    y: number;
-  };
   suit: string;
   rank: string;
   value: number;
   cardImage: HTMLImageElement;
 
-  constructor(rank: string, suit: string, src?: string) {
-    // this.initCardImage(src);
+  constructor(rank: string, suit: string, src: string) {
+    this.initCardImage(src);
     this.suit = suit;
     this.rank = rank;
     this.value = VALUES[this.rank];
-    this.position = {
-      x: 10,
-      y: 10,
-    };
   }
 
   get cardValue() {
@@ -29,13 +26,25 @@ export class Card {
     this.cardImage.src = src;
   }
 
-  draw(ctx: CanvasRenderingContext2D): void {
+  draw(ctx: CanvasRenderingContext2D, position: Position): void {
     ctx.beginPath();
     ctx.fillStyle = "#ffffff";
-    ctx.roundRect(0, 0, 160, 240, 6);
+    ctx.roundRect(
+      position.x - 10,
+      position.y - 10,
+      CARD_WIDTH + 20,
+      CARD_HEIGHT + 20,
+      6
+    );
     ctx.fill();
     ctx.closePath();
-    ctx.drawImage(this.cardImage, this.position.x, this.position.y, 140, 220);
+    ctx.drawImage(
+      this.cardImage,
+      position.x,
+      position.y,
+      CARD_WIDTH,
+      CARD_HEIGHT
+    );
   }
 
   update(ctx: CanvasRenderingContext2D): void {

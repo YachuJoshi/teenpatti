@@ -1,6 +1,7 @@
 import { Card } from "./card";
 import { Deck } from "./deck";
 import { Player } from "./player";
+import { CARD_LR_OFFSET, CARD_TB_OFFSET } from "./base";
 import { isConsecutive, areArraysEqual } from "./utils";
 
 interface Result {
@@ -8,6 +9,11 @@ interface Result {
   cards: Card[];
   outcome: string;
   sum: number;
+}
+
+interface Position {
+  x: number;
+  y: number;
 }
 
 export class Game {
@@ -21,8 +27,8 @@ export class Game {
     this.players = [
       new Player("Jennie"),
       new Player("Lisa"),
-      new Player("Jisoo"),
-      new Player("Rose"),
+      // new Player("Jisoo"),
+      // new Player("Rose"),
     ];
     this.possibleOutcomes = [
       this.trail,
@@ -39,6 +45,8 @@ export class Game {
       "pair",
       "high",
     ];
+    this.deck.shuffle();
+    this.distributeCards();
   }
 
   distributeCards(): void {
@@ -136,10 +144,19 @@ export class Game {
     return winnerResult;
   };
 
-  start() {
-    this.deck.shuffle();
-    this.distributeCards();
+  draw(ctx: CanvasRenderingContext2D): void {
+    this.players.forEach((player, playerIndex) => {
+      player.cards.forEach((card, cardIndex) => {
+        const position: Position = {
+          x: CARD_LR_OFFSET + cardIndex * 200,
+          y: CARD_TB_OFFSET + playerIndex * 360,
+        };
+        card.draw(ctx, position);
+      });
+    });
+  }
 
+  start() {
     const result: Result[] = this.players.map((player) => {
       return {
         ...player,

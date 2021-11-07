@@ -1,6 +1,7 @@
-const SUITS: string[] = ["Hearts", "Diamonds", "Spades", "Clubs"];
+const SUITS: string[] = ["Clubs", "Diamonds", "Hearts", "Spades"];
 
 const RANKS: string[] = [
+  "Ace",
   "Two",
   "Three",
   "Four",
@@ -13,7 +14,6 @@ const RANKS: string[] = [
   "Jack",
   "Queen",
   "King",
-  "Ace",
 ];
 
 const VALUES: {
@@ -34,4 +34,21 @@ const VALUES: {
   Ace: 14,
 };
 
-export { SUITS, RANKS, VALUES };
+const CANVAS_HEIGHT = 700;
+const CANVAS_WIDTH = 1000;
+const CARD_HEIGHT = 220;
+const CARD_WIDTH = 140;
+const CARD_LR_OFFSET = (CANVAS_WIDTH - ((CARD_WIDTH + 20) * 3 + 80)) / 2;
+const CARD_TB_OFFSET = (CANVAS_HEIGHT - ((CARD_HEIGHT + 20) * 2 + 100)) / 2;
+
+export {
+  SUITS,
+  RANKS,
+  VALUES,
+  CANVAS_HEIGHT,
+  CANVAS_WIDTH,
+  CARD_HEIGHT,
+  CARD_WIDTH,
+  CARD_LR_OFFSET,
+  CARD_TB_OFFSET,
+};

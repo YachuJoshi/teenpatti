@@ -1,8 +1,10 @@
+import { CANVAS_HEIGHT, CANVAS_WIDTH } from "./base";
+
 export const initCanvas = () => {
   const canvas = <HTMLCanvasElement>document.getElementById("canvas");
   const ctx = canvas.getContext("2d")!;
-  canvas.height = 700;
-  canvas.width = 1000;
+  canvas.height = CANVAS_HEIGHT;
+  canvas.width = CANVAS_WIDTH;
 
   CanvasRenderingContext2D.prototype.roundRect = function (
     x,
