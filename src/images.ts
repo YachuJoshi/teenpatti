@@ -63,7 +63,7 @@ import aceDiamonds from "./assets/cards/ace_of_diamonds.png";
 import aceHearts from "./assets/cards/ace_of_hearts.png";
 import aceSpades from "./assets/cards/ace_of_spades.png";
 
-interface CardImage {}
+import cardBack from "./assets/cards/cardBack.png";
 
 const cardImage: [string, string, string, string][] = [];
 cardImage.push([aceClubs, aceDiamonds, aceHearts, aceSpades]);
@@ -80,4 +80,4 @@ cardImage.push([jackClubs, jackDiamonds, jackHearts, jackSpades]);
 cardImage.push([queenClubs, queenDiamonds, queenHearts, queenSpades]);
 cardImage.push([kingClubs, kingDiamonds, kingHearts, kingSpades]);
 
-export { cardImage };
+export { cardImage, cardBack };

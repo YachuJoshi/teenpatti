@@ -1,7 +1,14 @@
 import { Card } from "./card";
 import { Deck } from "./deck";
 import { Player } from "./player";
-import { CARD_LR_OFFSET, CARD_TB_OFFSET } from "./base";
+import { CardBack } from "./cardBack";
+import {
+  CARD_WIDTH,
+  CARD_HEIGHT,
+  CANVAS_HEIGHT,
+  CARD_LR_OFFSET,
+  CARD_TB_OFFSET,
+} from "./base";
 import { isConsecutive, areArraysEqual } from "./utils";
 
 interface Result {
@@ -16,20 +23,18 @@ interface Position {
   y: number;
 }
 
+let isDistributing: boolean;
+
 export class Game {
   deck: Deck;
+  cardBack: CardBack[];
   players: Player[];
   possibleOutcomes: ((cards: Card[]) => boolean)[];
   possibleOutcomesString: string[];
 
   constructor() {
     this.deck = new Deck();
-    this.players = [
-      new Player("Jennie"),
-      new Player("Lisa"),
-      // new Player("Jisoo"),
-      // new Player("Rose"),
-    ];
+    this.players = [new Player("Jennie"), new Player("Lisa")];
     this.possibleOutcomes = [
       this.trail,
       this.straightFlush,
@@ -45,8 +50,32 @@ export class Game {
       "pair",
       "high",
     ];
+    this.cardBack = [];
+    this.initCardBack();
     this.deck.shuffle();
     this.distributeCards();
+    isDistributing = true;
+  }
+
+  initCardBack(): void {
+    for (let i = 0; i < 6; i++) {
+      this.cardBack.push(new CardBack());
+    }
+  }
+
+  animateCardDistribution(): void {
+    let count = 0;
+    for (let i = 0; i < 3; i++) {
+      this.players.forEach((_, pIndex) => {
+        const back = this.cardBack[count];
+        const position: Position = {
+          x: CARD_LR_OFFSET + i * 200,
+          y: CARD_TB_OFFSET + pIndex * 360,
+        };
+        back.update(position);
+        count++;
+      });
+    }
   }
 
   distributeCards(): void {
@@ -145,6 +174,15 @@ export class Game {
   };
 
   draw(ctx: CanvasRenderingContext2D): void {
+    this.cardBack.forEach((back) => {
+      back.draw(ctx);
+    });
+
+    if (isDistributing) {
+      return;
+    }
+
+    // Draw Cards
     this.players.forEach((player, playerIndex) => {
       player.cards.forEach((card, cardIndex) => {
         const position: Position = {
@@ -165,8 +203,8 @@ export class Game {
       };
     });
 
-    console.log(result);
+    // console.log(result);
     let winnerResult = this.getWinnerResult(result);
-    console.log("Winner", winnerResult);
+    // console.log("Winner", winnerResult);
   }
 }

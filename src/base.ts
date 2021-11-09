@@ -35,7 +35,7 @@ const VALUES: {
 };
 
 const CANVAS_HEIGHT = 700;
-const CANVAS_WIDTH = 1000;
+const CANVAS_WIDTH = 1200;
 const CARD_HEIGHT = 220;
 const CARD_WIDTH = 140;
 const CARD_LR_OFFSET = (CANVAS_WIDTH - ((CARD_WIDTH + 20) * 3 + 80)) / 2;
