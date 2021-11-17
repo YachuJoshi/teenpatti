@@ -2,13 +2,7 @@ import { Card } from "./card";
 import { Deck } from "./deck";
 import { Player } from "./player";
 import { CardBack } from "./cardBack";
-import {
-  CARD_WIDTH,
-  CARD_HEIGHT,
-  CANVAS_HEIGHT,
-  CARD_LR_OFFSET,
-  CARD_TB_OFFSET,
-} from "./base";
+import { CARD_LR_OFFSET, CARD_TB_OFFSET } from "./base";
 import { isConsecutive, areArraysEqual } from "./utils";
 
 interface Result {
@@ -63,19 +57,20 @@ export class Game {
     }
   }
 
-  animateCardDistribution(): void {
+  async animateCardDistribution(): Promise<void> {
     let count = 0;
     for (let i = 0; i < 3; i++) {
-      this.players.forEach((_, pIndex) => {
+      for (let j = 0; j < this.players.length; j++) {
         const back = this.cardBack[count];
         const position: Position = {
-          x: CARD_LR_OFFSET + i * 200,
-          y: CARD_TB_OFFSET + pIndex * 360,
+          x: CARD_LR_OFFSET + i * 200 - 10,
+          y: CARD_TB_OFFSET + j * 360 - 10,
         };
-        back.update(position);
+        await back.moveTo(position);
         count++;
-      });
+      }
     }
+    isDistributing = false;
   }
 
   distributeCards(): void {
@@ -174,11 +169,10 @@ export class Game {
   };
 
   draw(ctx: CanvasRenderingContext2D): void {
-    this.cardBack.forEach((back) => {
-      back.draw(ctx);
-    });
-
     if (isDistributing) {
+      this.cardBack.forEach((back) => {
+        back.draw(ctx);
+      });
       return;
     }
 
@@ -195,6 +189,7 @@ export class Game {
   }
 
   start() {
+    this.animateCardDistribution().then();
     const result: Result[] = this.players.map((player) => {
       return {
         ...player,
@@ -205,6 +200,6 @@ export class Game {
 
     // console.log(result);
     let winnerResult = this.getWinnerResult(result);
-    // console.log("Winner", winnerResult);
+    console.log(winnerResult);
   }
 }

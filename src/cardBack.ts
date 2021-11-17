@@ -6,6 +6,12 @@ interface Position {
   y: number;
 }
 
+interface Step {
+  step: number;
+  dx: number;
+  dy: number;
+}
+
 export class CardBack {
   position: Position;
   image: HTMLImageElement;
@@ -29,7 +35,27 @@ export class CardBack {
     );
   }
 
-  update(finalP: Position): void {
-    const initalP = this.position;
+  getMoveStep(initalP: Position, finalP: Position): Step {
+    const delX = finalP.x - initalP.x;
+    const delY = finalP.y - initalP.y;
+    const step = delX > delY ? delX : delY;
+    return { dx: delX / step, dy: delY / step, step };
+  }
+
+  moveTo(finalP: Position): Promise<void> {
+    const { dx, dy, step } = this.getMoveStep(this.position, finalP);
+    let i = 1;
+    return new Promise((resolve, reject) => {
+      const id = setInterval(() => {
+        if (i >= step) {
+          clearInterval(id);
+          resolve();
+          return;
+        }
+        this.position.x += dx;
+        this.position.y += dy;
+        i++;
+      }, 0);
+    });
   }
 }
