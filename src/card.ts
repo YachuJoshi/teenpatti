@@ -46,8 +46,4 @@ export class Card {
       CARD_HEIGHT
     );
   }
-
-  update(ctx: CanvasRenderingContext2D): void {
-    // TODO: Animate card into position
-  }
 }

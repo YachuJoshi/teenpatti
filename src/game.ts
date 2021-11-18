@@ -16,19 +16,17 @@ interface Position {
   x: number;
   y: number;
 }
-
-let isDistributing: boolean;
-
 export class Game {
   deck: Deck;
   cardBack: CardBack[];
   players: Player[];
+  isDistributing: boolean;
   possibleOutcomes: ((cards: Card[]) => boolean)[];
   possibleOutcomesString: string[];
 
-  constructor() {
+  constructor(players: string[]) {
     this.deck = new Deck();
-    this.players = [new Player("Jennie"), new Player("Lisa")];
+    this.players = [new Player(players[0]), new Player(players[1])];
     this.possibleOutcomes = [
       this.trail,
       this.straightFlush,
@@ -48,7 +46,7 @@ export class Game {
     this.initCardBack();
     this.deck.shuffle();
     this.distributeCards();
-    isDistributing = true;
+    this.isDistributing = true;
   }
 
   initCardBack(): void {
@@ -70,7 +68,7 @@ export class Game {
         count++;
       }
     }
-    isDistributing = false;
+    this.isDistributing = false;
   }
 
   distributeCards(): void {
@@ -92,7 +90,7 @@ export class Game {
   };
 
   run = (cards: Card[]): boolean => {
-    const values = cards.map((card) => card.value);
+    const values = cards.map((card) => card.value).sort((a, b) => a - b);
     return (
       isConsecutive(values) ||
       areArraysEqual(
@@ -169,7 +167,7 @@ export class Game {
   };
 
   draw(ctx: CanvasRenderingContext2D): void {
-    if (isDistributing) {
+    if (this.isDistributing) {
       this.cardBack.forEach((back) => {
         back.draw(ctx);
       });
@@ -188,8 +186,8 @@ export class Game {
     });
   }
 
-  start() {
-    this.animateCardDistribution().then();
+  async start(): Promise<Result> {
+    await this.animateCardDistribution();
     const result: Result[] = this.players.map((player) => {
       return {
         ...player,
@@ -198,8 +196,7 @@ export class Game {
       };
     });
 
-    // console.log(result);
-    let winnerResult = this.getWinnerResult(result);
-    console.log(winnerResult);
+    let winner = this.getWinnerResult(result);
+    return winner;
   }
 }

@@ -8,6 +8,23 @@
     <title>Teenpatti</title>
   </head>
   <body>
+    <div id="formContainer" class="formContainer">
+      <form>
+        <div>
+          <label for="name"> Player 1: </label>
+          <input type="text" placeholder="Player Name" required />
+        </div>
+        <div>
+          <label for="name"> Player 2: </label>
+          <input type="text" placeholder="Player Name" required />
+        </div>
+        <button id="submit" type="submit">Start</button>
+      </form>
+    </div>
+    <div id="winnerContainer" class="winnerContainer">
+      <span>Winner: <span id="winner">0</span></span>
+      <button id="restart">Play Again</button>
+    </div>
     <canvas id="canvas"></canvas>
   </body>
 </html>

@@ -45,7 +45,7 @@ export class CardBack {
   moveTo(finalP: Position): Promise<void> {
     const { dx, dy, step } = this.getMoveStep(this.position, finalP);
     let i = 1;
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, _) => {
       const id = setInterval(() => {
         if (i >= step) {
           clearInterval(id);
