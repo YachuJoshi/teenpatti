@@ -5,7 +5,7 @@ import {
   formContainer,
   playerOneInput,
   playerTwoInput,
-  submitButton,
+  startButton,
   restartButton,
   winnerContainer,
   winnerEl,
@@ -43,7 +43,7 @@ const init = async (players: string[]) => {
   showWinnerScreen(winner);
 };
 
-submitButton.addEventListener("click", async (e) => {
+startButton.addEventListener("click", async (e) => {
   e.preventDefault();
   if (playerOneInput.value !== "" && playerTwoInput.value !== "") {
     init([playerOneInput.value, playerTwoInput.value]);

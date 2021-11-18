@@ -196,7 +196,6 @@ export class Game {
       };
     });
 
-    let winner = this.getWinnerResult(result);
-    return winner;
+    return this.getWinnerResult(result);
   }
 }

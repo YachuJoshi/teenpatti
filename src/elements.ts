@@ -2,7 +2,7 @@ const formContainer = <HTMLDivElement>document.getElementById("formContainer")!;
 const playerInputs: HTMLInputElement[] = Array.from(
   document.querySelectorAll("input")
 );
-const submitButton = <HTMLButtonElement>document.getElementById("submit")!;
+const startButton = <HTMLButtonElement>document.getElementById("submit")!;
 
 const winnerContainer = <HTMLDivElement>(
   document.getElementById("winnerContainer")!
@@ -16,7 +16,7 @@ export {
   formContainer,
   playerOneInput,
   playerTwoInput,
-  submitButton,
+  startButton,
   winnerContainer,
   restartButton,
   winnerEl,
